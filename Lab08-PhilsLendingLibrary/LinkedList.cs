@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lab08_PhilsLendingLibrary
 {
-    internal class LinkedList : IEnumerable<int>
+    internal class LinkedList : IEnumerable<Book>
     {
         public Node Head { get; set; }
 
@@ -23,7 +23,7 @@ namespace Lab08_PhilsLendingLibrary
         }
 
         // This is the strongly-typed enumerator required for generic collections
-        public IEnumerator<int> GetEnumerator()
+        public IEnumerator<Book> GetEnumerator()
         {
             Node currentNode = Head;
             while (currentNode != null)
@@ -32,9 +32,10 @@ namespace Lab08_PhilsLendingLibrary
                 currentNode = currentNode.Next;
             }
         }
-        public void Insert(int value)
+
+        public void Insert(Book book)
         {
-            Node newNode = new Node(value);
+            Node newNode = new Node(book);
             if (Head == null)
             {
                 Head = newNode;
@@ -46,19 +47,19 @@ namespace Lab08_PhilsLendingLibrary
             }
         }
 
-        public bool Includes(int value)
+        public bool Includes(Book book)
         {
-            bool foundValue = false;
+            bool foundBook = false;
             Node currentNode = Head;
             while (currentNode != null)
             {
-                if (currentNode.Value == value)
+                if (currentNode.Value == book)
                 {
-                    foundValue = true;
+                    foundBook = true;
                 }
                 currentNode = currentNode.Next;
             }
-            return foundValue;
+            return foundBook;
         }
 
         public string ToString()
@@ -67,21 +68,20 @@ namespace Lab08_PhilsLendingLibrary
             Node currentNode = Head;
             while (currentNode != null)
             {
-                listString += currentNode.Value + " -> ";
+                listString += currentNode.Value.Title + " -> ";
                 currentNode = currentNode.Next;
             }
             listString += "NULL";
             return listString;
         }
-
-
     }
 
     public class Node
     {
-        public int Value { get; set; }
+        public Book Value { get; set; }
         public Node Next { get; set; }
-        public Node(int value)
+
+        public Node(Book value)
         {
             Value = value;
             Next = null;
