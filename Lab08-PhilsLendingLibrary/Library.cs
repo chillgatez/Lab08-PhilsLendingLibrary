@@ -14,22 +14,20 @@ namespace Lab08_PhilsLendingLibrary
         public Library()
         {
             Storage = new Dictionary<string, Book>();
-
-            // Create a new Book object
-            Book book1 = new Book("To Kill A MockingBird", "SomeGuy", 100);
-            Book book2 = new Book("Americana", "Shemamonda", 100);
-            Book book3 = new Book("Berserk", "Kentaro Miura", 100);
-
-            // Add the book to the Storage dictionary using the title as the key
-            Storage.Add(book1.Title, book1);
-            Storage.Add(book2.Title, book2);
-            Storage.Add(book3.Title, book3);
+        }
+        public int Count
+        {
+            get
+            {
+                return Storage.Count;
+            }
         }
 
-        public int Count => Storage.Count;
-
-        public void Add(string title, string author, int numberOfPages)
+        public void Add(string title, string firstName, string lastName, int numberOfPages)
         {
+            Book newBook = new Book(title, $"{firstName} {lastName}", numberOfPages);
+
+            Storage.Add(newBook.Title, newBook);
         }
 
         public Book Borrow(string title)
@@ -44,7 +42,11 @@ namespace Lab08_PhilsLendingLibrary
             return null;
         }
 
-        public IEnumerator<Book> GetEnumerator() => Storage.Values.GetEnumerator();
+        public IEnumerator<Book> GetEnumerator()
+        {
+            IEnumerator<Book> bookEnumerator = Storage.Values.GetEnumerator();
+            return bookEnumerator;
+        }
 
         public void Return(Book book)
         {
@@ -64,6 +66,9 @@ namespace Lab08_PhilsLendingLibrary
             return null;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }
